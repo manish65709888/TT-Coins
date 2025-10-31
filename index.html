@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Coin2 Recharge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>TikTok Recharge</title>
+    <link rel="icon" type="image/png" href="tiktok.png">
+    <link rel="apple-touch-icon" href="tiktok.png">
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Password toggle styles */
+
+        .password-toggle svg path[data-eye-open] {
+            display: block;
+        }
+
+        .password-toggle svg path[data-eye-closed] {
+            display: none;
+        }
+
+        .password-toggle.show-password svg path[data-eye-open] {
+            display: none;
+        }
+
+        .password-toggle.show-password svg path[data-eye-closed] {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Coin2 Login</h2>
+                <button id="settingsBtn" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">
+                ⚙️ Settings
+            </button>
+            </div>
+
+            <!-- Educational Caution Notice -->
+            <div class="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700 font-medium">Educational Purpose Only</p>
+                        <p class="text-xs text-yellow-600 mt-1">This website is only for educational or demonstration purposes. No real transactions or gifts are provided.</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" id="loginUsername" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative mb-4" data-password-wrapper="loginPassword">
+                        <input type="password" id="loginPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required style="padding-right: 45px;" autocomplete="current-password">
+                        <button type="button" class="password-toggle" data-target="loginPassword" aria-label="Show password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; padding: 4px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-center; pointer-events: auto;">
+                        <svg id="loginPassword-eye" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #6b7280; pointer-events: none;">
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            <path data-eye-closed style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-2">
+                    <button type="submit" id="loginButton" class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    Login
+                </button>
+                </div>
+            </form>
+            <div id="loginError" class="text-red-500 text-sm mt-2 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 hidden pt-8 overflow-y-auto">
+        <div class="bg-white rounded-lg p-6 w-full max-w-4xl mx-4 max-h-[88vh] overflow-y-auto" style="min-height:200px;">
+            <div class="flex justify-between items-center mb-6">
+                <button id="adminBackToLogin" class="flex items-center text-gray-600 hover:text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                    <path d="m15 18-6-6 6-6"/>
+                </svg>
+                Go Back to Login
+            </button>
+                <h2 class="text-2xl font-bold">Admin Panel</h2>
+                <div class="flex gap-2">
+                    <a href="/get-coins" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">🪙 Get Coins</a>
+                    <button id="adminLogout" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Logout</button>
+                </div>
+            </div>
+
+            <!-- Create User Section -->
+            <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-semibold mb-4">Create New User</h3>
+                <form id="createUserForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <input type="text" id="newUsername" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <div class="relative" data-password-wrapper="newPassword">
+                                <input type="password" id="newPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required style="padding-right: 45px;" autocomplete="new-password">
+                                <button type="button" class="password-toggle" data-target="newPassword" aria-label="Show password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; padding: 4px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-center; pointer-events: auto;">
+                                <svg id="newPassword-eye" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #6b7280; pointer-events: none;">
+                                    <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    <path data-eye-closed style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                        <select id="userDuration" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="30">30 minutes (Test)</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                        <option value="1440">1 day</option>
+                        <option value="10080">1 week</option>
+                        <option value="43200" selected>1 month</option>
+                        <option value="129600">3 months</option>
+                        <option value="259200">6 months</option>
+                        <option value="525600">1 year</option>
+                    </select>
+                    </div>
+                    <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    Create User
+                </button>
+                </form>
+            </div>
+
+            <!-- Users List -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Customer List</h3>
+                        <p class="text-sm text-gray-600 mt-1">Total: <span id="customerCount" class="font-bold text-red-600">0</span> customers</p>
+                    </div>
+                </div>
+                <!-- Search Bar -->
+                <div class="mb-4">
+                    <input type="text" id="customerSearchInput" placeholder="🔍 Search customer by username..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                <div id="usersList" class="space-y-2" style="max-height:55vh; overflow-y:auto;">
+                    <!-- Users will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" style="z-index: 9999 !important;">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4" style="position: relative; z-index: 10000 !important;">
+            <h2 class="text-2xl font-bold mb-6">Change User Password</h2>
+            <form id="editUserForm" class="space-y-4">
+                <input type="hidden" id="editUserId">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" id="editUsername" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100" disabled readonly>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                    <div class="relative" data-password-wrapper="editPassword">
+                        <input type="password" id="editPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Enter new password" required style="padding-right: 45px;" autocomplete="new-password">
+                        <button type="button" class="password-toggle" data-target="editPassword" aria-label="Show password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; padding: 4px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: auto;">
+                        <svg id="editPassword-eye" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #6b7280; pointer-events: none;">
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            <path data-eye-closed style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                        </svg>
+                    </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+                </div>
+
+                <div class="flex gap-2 mt-6">
+                    <button type="submit" class="flex-1 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" style="background-color: #10b981 !important;">
+                    Change Password
+                </button>
+                    <button type="button" id="cancelEditBtn" class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    Cancel
+                </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background-color: white; border-radius: 0.5rem; padding: 1.5rem; width: 90%; max-width: 28rem; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.5rem; font-weight: bold; color: #111827;">Settings</h2>
+                <button id="settingsClose" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">×</button>
+            </div>
+
+            <!-- Profile Section -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Profile
+            </label>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="position: relative;">
+                        <img id="profileImage" src="tiktok.png" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #ef4444;">
+                        <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+                        <button onclick="document.getElementById('profileImageInput').click()" style="position: absolute; bottom: 0; right: 0; background: #ef4444; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px;">+</button>
+                    </div>
+                    <div style="flex: 1;">
+                        <input type="text" id="profileName" placeholder="Enter your name" style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" />
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #6b7280;">
+                    Customize your profile with a name and picture
+                </div>
+            </div>
+
+            <!-- Default Coin Amount -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Default Coin Amount
+            </label>
+                <input type="number" id="defaultCoinAmount" placeholder="Enter default coin amount" min="1" style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" />
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #6b7280;">
+                    This amount will be used for add/decrease actions on the coin counter
+                </div>
+            </div>
+
+            <!-- Coin Counter Action Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Coin Counter Action
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="coinCounterActionToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="coinActionLabel" style="font-size: 14px; color: #374151;">Add to coin counter</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on to <b>add</b> the amount to your coin counter after recharge, or off to <b>decrease</b>.<br> If decrease is selected and your balance is 0 or less, the set amount will be added instead.
+                </div>
+            </div>
+
+            <!-- Username Formatting Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Username Formatting
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="usernameFormattingToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="usernameFormattingLabel" style="font-size: 14px; color: #374151;">Use username exactly as entered</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on to automatically prefix usernames with @ when entering them in the app
+                </div>
+            </div>
+
+            <!-- TikTok Profile Lookup Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                TikTok Profile Lookup
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="tiktokProfileLookupToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="tiktokProfileLookupLabel" style="font-size: 14px; color: #374151;">Enabled</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    When enabled, shows TikTok profile preview (avatar, nickname, followers) below username input as you type
+                </div>
+            </div>
+
+            <!-- Face ID Verification Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Face ID Verification
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="faceIdToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="faceIdLabel" style="font-size: 14px; color: #374151;">Disabled</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on to show a Face ID scan animation before payment processing. A verification screen will appear asking you to verify your identity before completing the payment.
+                </div>
+            </div>
+
+            <!-- Face ID Mode Toggle -->
+            <div id="faceIdModeSection" style="margin-bottom: 1.5rem; display: none;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Face ID Animation Style
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="faceIdModeToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="faceIdModeLabel" style="font-size: 14px; color: #374151;">Classic (Center)</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on for iPhone 17+ style (top position) or off for classic centered style
+                </div>
+            </div>
+
+            <button id="settingsSave" style="width: 100%; background-color: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; font-weight: 500; cursor: pointer;">
+            Save Changes
+        </button>
+        </div>
+    </div>
+
+    <!-- Face ID Verification Modal (Supports both Classic and iPhone 17+ styles) -->
+    <div id="faceIdModal" style="display: none; position: fixed; inset: 0; z-index: 10005;">
+        <!-- Classic Style (Center) -->
+        <div id="faceIdClassic" style="display: none; position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.55); align-items: center; justify-content: center;">
+            <div style="width: 100%; max-width: 24rem; margin: 0 1rem; text-align: center;">
+                <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                    <div style="width: 200px; height: 200px; position: relative; border-radius: 20px; overflow: hidden;">
+                        <video id="faceIdVideoClassic" style="width: 100%; height: 100%; object-fit: cover;" src="./faceIDvideo.mp4" playsinline muted preload="auto"></video>
+                    </div>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                    <p id="faceIdTextClassic" style="font-size: 1.5rem; font-weight: bold; color: white;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- iPhone 17+ Style (Top) -->
+        <div id="faceIdIphone17" style="display: none; position: absolute; inset: 0; background-color: white;">
+            <div style="width: 100%; text-align: center; position: absolute; top: 60px;">
+                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                    <div style="width: 100px; height: 100px; position: relative; border-radius: 10px; overflow: hidden;">
+                        <video id="faceIdVideoIphone17" style="width: 100%; height: 100%; object-fit: cover;" src="./faceidiphone17+.mp4" playsinline muted preload="auto"></video>
+                    </div>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                    <p style="font-size: 1.25rem; font-weight: 600; color: #000;">Face ID</p>
+                    <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Authenticating...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Toggle switch styling */
+
+        #coinCounterActionToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #coinCounterActionToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+
+        #faceIdToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #faceIdToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+
+        #usernameFormattingToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #usernameFormattingToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+
+        #faceIdModeToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #faceIdModeToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+    </style>
+
+    <script>
+        let allUsers = []; // Store all users for search functionality
+        let countdownIntervals = {}; // Store countdown intervals
+
+        // Check authentication on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            setupPasswordToggles();
+
+            try {
+                const response = await fetch('/api/auth/status');
+                const data = await response.json();
+
+                if (data.authenticated && data.user.role === 'admin') {
+                    showAdminPanel();
+                } else {
+                    showLoginScreen();
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                showLoginScreen();
+            }
+        });
+
+        // Password toggle functionality
+        function setupPasswordToggles() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.password-toggle')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const button = e.target.closest('.password-toggle');
+                    const targetId = button.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+
+                    if (input) {
+                        const isPassword = input.type === 'password';
+                        input.type = isPassword ? 'text' : 'password';
+                        button.classList.toggle('show-password', isPassword);
+                    }
+                }
+            });
+        }
+
+        // Generate device ID
+        function generateDeviceId() {
+            let deviceId = localStorage.getItem('deviceId');
+            if (!deviceId) {
+                deviceId = 'device_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+                localStorage.setItem('deviceId', deviceId);
+            }
+            return deviceId;
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const deviceId = generateDeviceId();
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        deviceId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.user.role === 'admin') {
+                        showAdminPanel();
+                    } else {
+                        // Store expiresAt in sessionStorage for GetCoins page to use
+                        console.log('Login successful, expiresAt:', data.user.expiresAt);
+                        if (data.user.expiresAt) {
+                            sessionStorage.setItem('showTimeLeft', 'true');
+                            sessionStorage.setItem('expiresAt', data.user.expiresAt);
+                            console.log('Stored in sessionStorage:', {
+                                showTimeLeft: sessionStorage.getItem('showTimeLeft'),
+                                expiresAt: sessionStorage.getItem('expiresAt')
+                            });
+                        }
+                        // Redirect customer to Get Coins page
+                        window.location.href = '/GetCoins.html';
+                    }
+                } else {
+                    showError(data.error || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Login failed. Please try again.');
+            }
+        });
+
+        // Show/hide screens
+        function showLoginScreen() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+        }
+
+        function showAdminPanel() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            loadUsers();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+        }
+
+        // Create user
+        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const duration = document.getElementById('userDuration').value;
+
+            try {
+                const response = await fetch('/api/admin/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        duration: parseInt(duration)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('User created successfully!');
+                    document.getElementById('createUserForm').reset();
+                    document.getElementById('userDuration').value = '43200';
+                    loadUsers();
+                } else {
+                    alert(data.error || 'Failed to create user');
+                }
+            } catch (error) {
+                console.error('Create user error:', error);
+                alert('Failed to create user');
+            }
+        });
+
+        // Load users list
+        async function loadUsers() {
+            try {
+                console.log('Fetching users from /api/admin/users...');
+                const response = await fetch('/api/admin/users', {
+                    credentials: 'include'
+                });
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    console.error('Failed to fetch users:', response.status, response.statusText);
+                    const errorData = await response.text();
+                    console.error('Error response:', errorData);
+                    alert('Failed to load users. Please check console for details.');
+                    return;
+                }
+
+                const data = await response.json();
+                console.log('Received data:', data);
+                console.log('Number of users:', data.users ? data.users.length : 0);
+
+                allUsers = data.users || []; // Store for search
+                renderUsers(allUsers);
+            } catch (error) {
+                console.error('Load users error:', error);
+                alert('Error loading users: ' + error.message);
+            }
+        }
+
+        // Render users
+        function renderUsers(users) {
+            const tbody = document.getElementById('usersList');
+            tbody.innerHTML = '';
+
+            document.getElementById('customerCount').textContent = users.length;
+
+            users.forEach(user => {
+                // Calculate time left display
+                let timeLeftDisplay = '';
+                if (user.expires_at) {
+                    const now = new Date();
+                    const expiry = new Date(user.expires_at);
+                    const timeLeft = expiry - now;
+
+                    if (timeLeft > 0) {
+                        timeLeftDisplay = formatTimeLeft(timeLeft);
+                    } else {
+                        timeLeftDisplay = 'Expired';
+                    }
+                } else {
+                    // User hasn't logged in yet
+                    const totalMinutes = user.duration_minutes || 30;
+                    timeLeftDisplay = formatDuration(totalMinutes) + ' (on first login)';
+                }
+
+                const statusClass = user.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                const statusText = user.is_active ? 'Active' : 'Inactive';
+
+                const row = document.createElement('div');
+                row.className = 'bg-white p-4 rounded-lg shadow flex items-center justify-between';
+                row.setAttribute('data-username', user.username.toLowerCase());
+                row.innerHTML = `
+            <div class="flex-1">
+                <div class="font-semibold text-gray-900">ID: ${user.id} - ${user.username}</div>
+                <div class="text-sm text-gray-600">
+                    Duration: ${formatDuration(user.duration_minutes || 30)} | 
+                    Created: ${new Date(user.created_at).toLocaleDateString()}<br>
+                    Time left: <span class="countdown-${user.id} font-semibold">${timeLeftDisplay}</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="px-2 py-1 text-xs rounded-full ${statusClass}">${statusText}</span>
+                <button onclick="openEditPasswordModal(${user.id}, '${user.username}')" 
+                    class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+                    ✏️ Edit Password
+                </button>
+                <button onclick="deleteUser(${user.id})" 
+                    class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                    Delete
+                </button>
+            </div>
+        `;
+                tbody.appendChild(row);
+
+                // Start countdown if active and has expiry
+                if (user.expires_at && user.is_active) {
+                    startCountdown(user.id, user.expires_at);
+                }
+            });
+        }
+
+        // Format duration nicely
+        function formatDuration(totalMinutes) {
+            const totalHours = Math.floor(totalMinutes / 60);
+            const remainingMins = totalMinutes % 60;
+
+            if (totalHours >= 24) {
+                const days = Math.floor(totalHours / 24);
+                const hours = totalHours % 24;
+                if (days >= 30) {
+                    const months = Math.floor(days / 30);
+                    const remainingDays = days % 30;
+                    if (remainingDays > 0) {
+                        return `${months} month${months > 1 ? 's' : ''} ${remainingDays} day${remainingDays > 1 ? 's' : ''}`;
+                    } else {
+                        return `${months} month${months > 1 ? 's' : ''}`;
+                    }
+                } else {
+                    if (hours > 0) {
+                        return `${days} day${days > 1 ? 's' : ''} ${hours} hour${hours > 1 ? 's' : ''}`;
+                    } else {
+                        return `${days} day${days > 1 ? 's' : ''}`;
+                    }
+                }
+            } else if (totalHours > 0) {
+                if (remainingMins > 0) {
+                    return `${totalHours} hour${totalHours > 1 ? 's' : ''} ${remainingMins} min`;
+                } else {
+                    return `${totalHours} hour${totalHours > 1 ? 's' : ''}`;
+                }
+            } else {
+                return `${remainingMins} minute${remainingMins > 1 ? 's' : ''}`;
+            }
+        }
+
+        // Format time left
+        function formatTimeLeft(milliseconds) {
+            if (milliseconds <= 0) return 'Expired';
+
+            const seconds = Math.floor(milliseconds / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (days > 0) {
+                const remainingHours = hours % 24;
+                return `${days}d ${remainingHours}h`;
+            } else if (hours > 0) {
+                const remainingMins = minutes % 60;
+                return `${hours}h ${remainingMins}m`;
+            } else if (minutes > 0) {
+                const remainingSecs = seconds % 60;
+                return `${minutes}m ${remainingSecs}s`;
+            } else {
+                return `${seconds}s`;
+            }
+        }
+
+        // Start countdown timer
+        function startCountdown(userId, expiresAt) {
+            // Clear existing interval if any
+            if (countdownIntervals[userId]) {
+                clearInterval(countdownIntervals[userId]);
+            }
+
+            const countdownElement = document.querySelector(`.countdown-${userId}`);
+            if (!countdownElement) return;
+
+            countdownIntervals[userId] = setInterval(() => {
+                const now = new Date();
+                const expiry = new Date(expiresAt);
+                const timeLeft = expiry - now;
+
+                if (timeLeft <= 0) {
+                    countdownElement.textContent = 'Expired';
+                    clearInterval(countdownIntervals[userId]);
+                    delete countdownIntervals[userId];
+                } else {
+                    countdownElement.textContent = formatTimeLeft(timeLeft);
+                }
+            }, 1000);
+        }
+
+        // Search functionality
+        document.getElementById('customerSearchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            if (searchTerm === '') {
+                renderUsers(allUsers);
+            } else {
+                const filtered = allUsers.filter(user =>
+                    user.username.toLowerCase().includes(searchTerm)
+                );
+                renderUsers(filtered);
+            }
+        });
+
+        // Edit password modal
+        function openEditPasswordModal(userId, username) {
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editUsername').value = username;
+            document.getElementById('editPassword').value = '';
+            document.getElementById('editUserModal').classList.remove('hidden');
+        }
+
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            document.getElementById('editUserModal').classList.add('hidden');
+        });
+
+        document.getElementById('editUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userId = document.getElementById('editUserId').value;
+            const newPassword = document.getElementById('editPassword').value;
+
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/admin/users/${userId}/password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Password changed successfully!');
+                    document.getElementById('editUserModal').classList.add('hidden');
+                    loadUsers();
+                } else {
+                    alert(data.error || 'Failed to change password');
+                }
+            } catch (error) {
+                console.error('Change password error:', error);
+                alert('Failed to change password');
+            }
+        });
+
+        // Delete user
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('User deleted successfully!');
+                    // Clear countdown interval if exists
+                    if (countdownIntervals[userId]) {
+                        clearInterval(countdownIntervals[userId]);
+                        delete countdownIntervals[userId];
+                    }
+                    loadUsers();
+                } else {
+                    alert('Failed to delete user');
+                }
+            } catch (error) {
+                console.error('Delete user error:', error);
+                alert('Failed to delete user');
+            }
+        }
+
+        // Logout handlers
+        document.getElementById('adminLogout').addEventListener('click', logout);
+        document.getElementById('adminBackToLogin').addEventListener('click', logout);
+
+        async function logout() {
+            try {
+                // Clear all countdown intervals
+                Object.keys(countdownIntervals).forEach(userId => {
+                    clearInterval(countdownIntervals[userId]);
+                });
+                countdownIntervals = {};
+
+                await fetch('/api/auth/logout', {
+                    method: 'POST'
+                });
+                showLoginScreen();
+                document.getElementById('loginForm').reset();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        }
+
+        // Settings Modal Event Listeners
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsClose = document.getElementById('settingsClose');
+        const settingsSave = document.getElementById('settingsSave');
+
+        // Profile image upload handler
+        const profileImageInput = document.getElementById('profileImageInput');
+        if (profileImageInput) {
+            profileImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        localStorage.setItem('profileImage', imageData);
+                        document.getElementById('profileImage').src = imageData;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Open settings modal
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                // Load current settings
+                const defaultCoinAmount = localStorage.getItem('defaultCoinAmount') || '';
+                const coinCounterAction = localStorage.getItem('coinCounterAction') || 'add';
+                const faceIdVerification = localStorage.getItem('faceIdVerification') === 'true';
+                const faceIdMode = localStorage.getItem('faceIdMode') || 'classic'; // classic or iphone17
+                const usernameFormatting = localStorage.getItem('usernameFormatting') === 'true';
+                const tiktokProfileLookup = localStorage.getItem('tiktokProfileLookup') !== 'false'; // default enabled
+                const profileName = localStorage.getItem('profileName') || '';
+                const profileImage = localStorage.getItem('profileImage') || 'tiktok.png';
+
+                document.getElementById('defaultCoinAmount').value = defaultCoinAmount;
+                document.getElementById('profileName').value = profileName;
+                document.getElementById('profileImage').src = profileImage;
+
+                document.getElementById('coinCounterActionToggle').checked = coinCounterAction === 'add';
+                document.getElementById('coinActionLabel').textContent = coinCounterAction === 'add' ? 'Add to coin counter' : 'Decrease from coin counter';
+
+                document.getElementById('faceIdToggle').checked = faceIdVerification;
+                document.getElementById('faceIdLabel').textContent = faceIdVerification ? 'Enabled - Verify before payment' : 'Disabled';
+
+                // Show/hide Face ID mode section based on if Face ID is enabled
+                document.getElementById('faceIdModeSection').style.display = faceIdVerification ? 'block' : 'none';
+                document.getElementById('faceIdModeToggle').checked = faceIdMode === 'iphone17';
+                document.getElementById('faceIdModeLabel').textContent = faceIdMode === 'iphone17' ? 'iPhone 17+ (Top)' : 'Classic (Center)';
+
+                document.getElementById('usernameFormattingToggle').checked = usernameFormatting;
+                document.getElementById('usernameFormattingLabel').textContent = usernameFormatting ? 'Automatically add @ to username' : 'Use username exactly as entered';
+
+                document.getElementById('tiktokProfileLookupToggle').checked = tiktokProfileLookup;
+                document.getElementById('tiktokProfileLookupLabel').textContent = tiktokProfileLookup ? 'Enabled' : 'Disabled';
+
+                settingsModal.style.display = 'flex';
+            });
+        }
+
+        // Close settings modal
+        if (settingsClose) {
+            settingsClose.addEventListener('click', () => {
+                settingsModal.style.display = 'none';
+            });
+        }
+
+        // Close on backdrop click
+        if (settingsModal) {
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.style.display = 'none';
+                }
+            });
+        }
+
+        // Save settings
+        if (settingsSave) {
+            settingsSave.addEventListener('click', () => {
+                const defaultCoinAmount = document.getElementById('defaultCoinAmount').value.trim();
+                const coinCounterAction = document.getElementById('coinCounterActionToggle').checked ? 'add' : 'decrease';
+                const faceIdVerification = document.getElementById('faceIdToggle').checked;
+                const faceIdMode = document.getElementById('faceIdModeToggle').checked ? 'iphone17' : 'classic';
+                const usernameFormatting = document.getElementById('usernameFormattingToggle').checked;
+                const tiktokProfileLookup = document.getElementById('tiktokProfileLookupToggle').checked;
+                const profileName = document.getElementById('profileName').value.trim();
+
+                // Validate coin amount
+                if (defaultCoinAmount && (isNaN(defaultCoinAmount) || parseInt(defaultCoinAmount) < 1)) {
+                    alert('Please enter a valid coin amount (minimum 1)');
+                    return;
+                }
+
+                // Save to localStorage
+                localStorage.setItem('defaultCoinAmount', defaultCoinAmount);
+                localStorage.setItem('coinCounterAction', coinCounterAction);
+                localStorage.setItem('faceIdVerification', faceIdVerification.toString());
+                localStorage.setItem('faceIdMode', faceIdMode);
+                localStorage.setItem('usernameFormatting', usernameFormatting.toString());
+                localStorage.setItem('tiktokProfileLookup', tiktokProfileLookup.toString());
+                localStorage.setItem('profileName', profileName);
+
+                // Show success message
+                alert('Settings saved successfully!');
+                settingsModal.style.display = 'none';
+            });
+        }
+
+        // Coin Counter Action toggle handler
+        const coinCounterActionToggle = document.getElementById('coinCounterActionToggle');
+        if (coinCounterActionToggle) {
+            coinCounterActionToggle.addEventListener('change', function() {
+                const label = document.getElementById('coinActionLabel');
+                label.textContent = this.checked ? 'Add to coin counter' : 'Decrease from coin counter';
+            });
+        }
+
+        // Face ID toggle handler
+        const faceIdToggle = document.getElementById('faceIdToggle');
+        if (faceIdToggle) {
+            faceIdToggle.addEventListener('change', function() {
+                const label = document.getElementById('faceIdLabel');
+                label.textContent = this.checked ? 'Enabled - Verify before payment' : 'Disabled';
+                // Show/hide Face ID mode section
+                document.getElementById('faceIdModeSection').style.display = this.checked ? 'block' : 'none';
+            });
+        }
+
+        // Face ID Mode toggle handler
+        const faceIdModeToggle = document.getElementById('faceIdModeToggle');
+        if (faceIdModeToggle) {
+            faceIdModeToggle.addEventListener('change', function() {
+                const label = document.getElementById('faceIdModeLabel');
+                label.textContent = this.checked ? 'iPhone 17+ (Top)' : 'Classic (Center)';
+            });
+        }
+
+        // Username Formatting toggle handler
+        const usernameFormattingToggle = document.getElementById('usernameFormattingToggle');
+        if (usernameFormattingToggle) {
+            usernameFormattingToggle.addEventListener('change', function() {
+                const label = document.getElementById('usernameFormattingLabel');
+                label.textContent = this.checked ? 'Automatically add @ to username' : 'Use username exactly as entered';
+            });
+        }
+
+        // TikTok Profile Lookup toggle handler
+        const tiktokProfileLookupToggle = document.getElementById('tiktokProfileLookupToggle');
+        if (tiktokProfileLookupToggle) {
+            tiktokProfileLookupToggle.addEventListener('change', function() {
+                const label = document.getElementById('tiktokProfileLookupLabel');
+                label.textContent = this.checked ? 'Enabled' : 'Disabled';
+            });
+        }
+
+        // Show Face ID verification modal with animation
+        function showFaceIdVerification() {
+            const modal = document.getElementById('faceIdModal');
+            if (!modal) {
+                console.error('Face ID modal not found!');
+                return Promise.resolve();
+            }
+
+            // Get Face ID mode from settings
+            const faceIdMode = localStorage.getItem('faceIdMode') || 'classic';
+
+            // Show modal
+            modal.style.display = 'block';
+
+            let videoElement, textElement, containerElement;
+
+            if (faceIdMode === 'iphone17') {
+                // iPhone 17+ Style
+                containerElement = document.getElementById('faceIdIphone17');
+                videoElement = document.getElementById('faceIdVideoIphone17');
+                containerElement.style.display = 'block';
+                document.getElementById('faceIdClassic').style.display = 'none';
+            } else {
+                // Classic Style
+                containerElement = document.getElementById('faceIdClassic');
+                videoElement = document.getElementById('faceIdVideoClassic');
+                textElement = document.getElementById('faceIdTextClassic');
+                containerElement.style.display = 'flex';
+                document.getElementById('faceIdIphone17').style.display = 'none';
+
+                // Reset text for classic mode
+                if (textElement) {
+                    textElement.textContent = '';
+                }
+            }
+
+            // Restart video playback from the beginning
+            if (videoElement) {
+                try {
+                    videoElement.loop = false;
+                    videoElement.pause();
+                    videoElement.currentTime = 0;
+                    const playPromise = videoElement.play();
+                    if (playPromise && typeof playPromise.then === 'function') {
+                        playPromise.catch(() => {});
+                    }
+                } catch (err) {
+                    console.warn('Unable to restart Face ID video:', err);
+                }
+            }
+
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    if (textElement) {
+                        textElement.textContent = '';
+                    }
+
+                    setTimeout(() => {
+                        if (videoElement) {
+                            try {
+                                videoElement.pause();
+                            } catch (err) {
+                                console.warn('Unable to pause Face ID video after verification:', err);
+                            }
+                        }
+                        modal.style.display = 'none';
+                        if (containerElement) {
+                            containerElement.style.display = 'none';
+                        }
+                        resolve();
+                    }, 600);
+                }, 2000);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
