@@ -1,1569 +1,1107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Get Coins">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>TikTok Recharge</title>
-<link rel="icon" type="image/png" href="tiktok.png">
-<link rel="apple-touch-icon" href="tiktok.png">
-<link rel="manifest" href="/manifest.json">
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-
-    body {
-        background-color: #f8f8f8;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        max-width: 400px;
-        margin: 0 auto;
-        position: relative;
-        overflow-x: hidden;
-    }
-
-    .header {
-        display: flex;
-        align-items: center;
-        padding: 12px 16px;
-        background-color: white;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        border-bottom: 1px solid #e8e8e8;
-    }
-
-    .header h1 {
-        flex: 1;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 600;
-    }
-
-    .back-button {
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    .main-content {
-        padding: 16px;
-        flex: 1;
-        background-color: white;
-        overflow-y: auto;
-    }
-
-    /* Your existing styles remain the same */
-    .profile-section {
-        background-color: white;
-        padding: 12px 16px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        position: relative;
-    }
-
-    .profile-pic {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background-color: #f1f1f2;
-        overflow: hidden;
-        margin-right: 12px;
-    }
-
-    .profile-info {
-        flex: 1;
-    }
-
-    .username {
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    .coins-count {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        color: #888;
-    }
-
-    .dropdown-arrow {
-        position: absolute;
-        right: 16px;
-        font-size: 20px;
-        color: #888;
-    }
-
-    .recharge-label {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .save-notice {
-        color: #ff3b5c;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-    }
-
-    .info-icon {
-        margin-left: 5px;
-        border: 1px solid #544d4e;
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        color: #544d4e;
-        cursor: pointer;
-    }
-
-    .coin-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 20px;
-    }
-
-    .coin-option {
-        border: 1px solid #e8e8e8;
-        border-radius: 8px;
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.2s;
-    }
-
-    .coin-option.selected {
-        border: 2px solid #ffcc00;
-    }
-
-    .coin-option.custom {
-        justify-content: center;
-    }
-
-    .coin-amount {
-        display: flex;
-        align-items: center;
-        font-weight: 600;
-        font-size: 18px;
-        margin-bottom: 4px;
-    }
-
-    .coin-icon {
-        width: 20px;
-        height: 20px;
-        background-color: #ffcc00;
-        border-radius: 50%;
-        margin-right: 4px;
-    }
-
-    .coin-price {
-        color: #888;
-        font-size: 14px;
-    }
-
-    .custom-text {
-        font-weight: 600;
-    }
-
-    .custom-subtext {
-        color: #888;
-        font-size: 12px;
-    }
-
-    .payment-methods {
-        display: flex;
-        margin-bottom: 20px;
-        font-size: 14px;
-        color: #555;
-    }
-
-    .payment-icon {
-        margin-right: 5px;
-    }
-
-    .total-section {
-        display: flex;
-        justify-content: space-between;
-        font-size: 16px;
-        padding-bottom: 10px;
-        border-top: 1px solid #e8e8e8;
-        padding-top: 10px;
-    }
-
-    .total-price {
-        font-weight: 600;
-    }
-
-    .footer {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 16px;
-        background-color: white;
-        border-top: 1px solid #e8e8e8;
-    }
-
-    .recharge-button {
-        width: 100%;
-        background-color: #ff3b5c;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    /* Modal styles */
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background-color: white;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 350px;
-        padding: 20px;
-        position: relative;
-    }
-
-    .slide-up {
-        animation: slideUp 0.3s ease-out;
-        transform-origin: bottom center;
-    }
-
-    @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-            opacity: 0;
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Coin2 Recharge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>TikTok Recharge</title>
+    <link rel="icon" type="image/png" href="tiktok.png">
+    <link rel="apple-touch-icon" href="tiktok.png">
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
-        to {
-            transform: translateY(0);
-            opacity: 1;
+
+        .hidden {
+            display: none !important;
         }
-    }
 
-    /* Fix for the countdown timer */
-    #countdown {
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 10px;
-    }
+        /* Password toggle styles */
 
-    .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    .modal-header {
-        text-align: center;
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 20px;
-    }
-
-    .custom-input-section {
-        margin-bottom: 20px;
-    }
-
-    .input-label {
-        font-size: 14px;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-    }
-
-    .dropdown-icon {
-        margin-left: 5px;
-    }
-
-    .custom-coin-input {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-    }
-
-    .keypad {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
-    }
-
-    .key {
-        background-color: #f1f1f2;
-        border: none;
-        border-radius: 4px;
-        padding: 12px;
-        font-size: 16px;
-        cursor: pointer;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        color: #000;
-    }
-
-    .key:focus,
-    .key:active,
-    .key:hover {
-        background-color: #e5e5e5;
-        color: #000;
-        outline: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    button {
-        color: inherit;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Order summary modal */
-    .order-summary {
-        text-align: left;
-    }
-
-    .summary-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 12px;
-    }
-
-    .summary-label {
-        color: #888;
-    }
-
-    .payment-method {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .card-info {
-        margin-left: 10px;
-    }
-
-    .terms-text {
-        font-size: 12px;
-        color: #888;
-        margin-bottom: 20px;
-        line-height: 1.4;
-    }
-
-    .terms-link {
-        font-weight: 600;
-        color: black;
-        text-decoration: none;
-    }
-
-    #customModal {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: none;
-        justify-content: center;
-        align-items: flex-end;
-        padding-bottom: 0;
-    }
-
-    #customModal .modal-content {
-        width: 100%;
-        max-width: 100%;
-        border-radius: 12px 12px 0 0;
-        position: relative;
-        margin-bottom: 0;
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    @media (min-width: 768px) {
-        #customModal .modal-content {
-            width: 400px;
-            max-width: 400px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+        .password-toggle svg path[data-eye-open] {
+            display: block;
         }
-        #customModal {
-            padding-bottom: 20px;
+
+        .password-toggle svg path[data-eye-closed] {
+            display: none;
         }
-    }
 
-    /* Processing and success modals */
-    .processing-payment,
-    .payment-success {
-        text-align: center;
-    }
-
-    .loader {
-        position: relative;
-        width: 80px;
-        height: 50px;
-        margin: 0 auto 20px;
-    }
-
-    .tiktok {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        background: rgb(77, 232, 244);
-        border-radius: 50%;
-        animation: leftToRight 0.8s ease-in-out infinite;
-        mix-blend-mode: darken;
-        transform: scale(1);
-    }
-
-    .tiktok.red {
-        background: rgb(253, 62, 62);
-        animation: rightToLeft 0.8s ease-in-out infinite;
-    }
-
-    @keyframes leftToRight {
-        0% {
-            left: 0;
+        .password-toggle.show-password svg path[data-eye-open] {
+            display: none;
         }
-        25% {
-            transform: scale(1.2);
+
+        .password-toggle.show-password svg path[data-eye-closed] {
+            display: block;
         }
-        50% {
-            left: 30px;
-        }
-        75% {
-            transform: scale(0.8);
-        }
-        100% {
-            left: 0;
-        }
-    }
-
-    @keyframes rightToLeft {
-        0% {
-            right: 0;
-        }
-        25% {
-            transform: scale(0.8);
-        }
-        50% {
-            right: 30px;
-        }
-        75% {
-            transform: scale(1.2);
-        }
-        100% {
-            right: 0;
-        }
-    }
-
-    .processing-text {
-        margin-bottom: 5px;
-        font-weight: 600;
-    }
-
-    .timer {
-        color: #888;
-        margin-bottom: 20px;
-    }
-
-    .success-icon {
-        width: 60px;
-        height: 60px;
-        background-color: #52cc52;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        color: white;
-        font-size: 32px;
-    }
-
-    .success-title {
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    .success-message {
-        color: #888;
-        margin-bottom: 20px;
-    }
-
-    .go-back-button {
-        background-color: #ff3b5c;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 12px 24px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    .username-textbox {
-        padding: 8px;
-        background-color: #f5f5f5;
-        font-family: Arial, sans-serif;
-        margin-bottom: 3px;
-    }
-
-    .username-textbox p {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
-    .username-input {
-        background-color: #f5f5f5;
-        border: none;
-        padding: 10px 0;
-        width: 100%;
-        color: #0c0303;
-        font-size: 16px;
-        outline: none;
-    }
-
-    /* TikTok Profile Lookup */
-    .profile-lookup {
-        background-color: white;
-        border-radius: 8px;
-        padding: 12px 16px;
-        margin-bottom: 20px;
-        display: none;
-        align-items: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .profile-lookup.show {
-        display: flex;
-    }
-
-    .profile-lookup-avatar {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        margin-right: 12px;
-        object-fit: cover;
-    }
-
-    .profile-lookup-info {
-        flex: 1;
-    }
-
-    .profile-lookup-handle {
-        font-size: 14px;
-        font-weight: 600;
-        color: #000;
-        margin-bottom: 2px;
-    }
-
-    .profile-lookup-nickname {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 2px;
-    }
-
-    .profile-lookup-followers {
-        font-size: 12px;
-        color: #888;
-    }
-
-    #customAmount {
-        background-color: #f5f5f5;
-        border: none;
-        padding: 10px 0;
-        color: #0c0303;
-        font-size: 16px;
-        outline: none;
-        display: inline-block;
-    }
-
-    .custom-coin-input {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        background-color: #f5f5f5;
-    }
-
-    /* Error prevention styles */
-    .error-prevention {
-        display: none;
-    }
-</style>
+    </style>
 </head>
 
-<body>
-<!-- Main page -->
-<div class="header">
-    <div class="back-button" onclick="logoutAndGoBack()">←</div>
-    <h1>Get Coins</h1>
-</div>
+<body class="bg-gray-100">
 
-<div class="main-content">
-    <!-- Updated profile section -->
-    <div class="profile-section">
-        <div class="profile-pic">
-            <img src="tiktok.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="profile-info">
-            <div class="username">Recharge</div>
-            <div class="coins-count">
-                <img src="moneda2.png" style="width: 16px; height: 16px; margin-right: 4px;"> 0
-            </div>
-        </div>
-        <div class="dropdown-arrow">▼</div>
-    </div>
-
-    <div class="username-textbox">
-        <input type="text" id="usernameInput" class="username-input" placeholder="Username">
-    </div>
-
-    <!-- TikTok Profile Lookup -->
-    <div id="profileLookup" class="profile-lookup">
-        <img id="profileAvatar" class="profile-lookup-avatar" src="" alt="Profile">
-        <div class="profile-lookup-info">
-            <div id="profileHandle" class="profile-lookup-handle"></div>
-            <div id="profileNickname" class="profile-lookup-nickname"></div>
-            <div id="profileFollowers" class="profile-lookup-followers"></div>
-        </div>
-    </div>
-
-    <div class="recharge-label">Recharge:</div>
-    <div class="save-notice">
-        Save around 25% with a lower third-party service fee
-        <div class="info-icon">i</div>
-    </div>
-
-    <div class="coin-grid">
-        <div class="coin-option" data-coins="70" data-price="0.74" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 70
-            </div>
-            <div class="coin-price">$ 0.74</div>
-        </div>
-
-        <div class="coin-option" data-coins="350" data-price="3.7" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 350
-            </div>
-            <div class="coin-price">$ 3.7</div>
-        </div>
-
-        <div class="coin-option" data-coins="700" data-price="7.4" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 700
-            </div>
-            <div class="coin-price">$ 7.4</div>
-        </div>
-
-        <div class="coin-option" data-coins="1400" data-price="14.8" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 1,400
-            </div>
-            <div class="coin-price">$ 14.8</div>
-        </div>
-
-        <div class="coin-option" data-coins="3500" data-price="37" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 3,500
-            </div>
-            <div class="coin-price">$ 37</div>
-        </div>
-
-        <div class="coin-option" data-coins="7000" data-price="74" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 7,000
-            </div>
-            <div class="coin-price">$ 74</div>
-        </div>
-
-        <div class="coin-option" data-coins="17500" data-price="185" onclick="selectCoinOption(this)">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> 17,500
-            </div>
-            <div class="coin-price">$ 185</div>
-        </div>
-
-        <div class="coin-option custom" data-coins="custom" onclick="openCustomModal()">
-            <div class="coin-amount">
-                <img src="moneda2.png" style="width: 28px; height: 28px;"> Custom
-            </div>
-            <div class="custom-subtext">Large amount supported</div>
-        </div>
-    </div>
-
-    <div class="payment-methods">
-        <img src="images.png" style="width: 28px; height: 28px; margin-right: 10px;">
-        <img src="images (1).png" style="width: 20px; height: 20px; margin-right: 10px; margin-top: 5px;">
-        <img src="American_Express_logo.png" style="width: 20px; height: 20px; margin-right: 10px; margin-top: 5px;">
-        <img src="images.jpeg" style="width: 20px; height: 20px; margin-right: 10px; margin-top: 5px;">
-
-        <img src="png.png" style="width: 20px; height: 20px; margin-right: 10px; margin-top: 5px;">
-        <img src="Maestro-logo.png" style="width: 20px; height: 20px; margin-right: 10px; margin-top: 5px;">
-        <img src="paypal.png" style="width: 20px; height: 30px; margin-bottom: 3px;">
-    </div>
-
-    <div class="total-section">
-        <div class="total-label">Total</div>
-        <div class="total-price">$ 74</div>
-    </div>
-</div>
-
-<div class="footer">
-    <button class="recharge-button" onclick="openOrderSummaryModal()">Recharge</button>
-</div>
-
-<!-- Custom amount modal -->
-<div class="modal" id="customModal">
-    <div class="modal-content slide-up">
-        <div class="close-button" onclick="closeModal('customModal')">×</div>
-        <div class="modal-header">Custom</div>
-
-        <div class="custom-input-section">
-            <div class="input-label">
-                Number of Coins <span class="dropdown-icon">▼</span>
-            </div>
-            <div class="custom-coin-input">
-                <img src="moneda2.png" style="width: 28px; height: 28px;">
-                <span id="customAmount">99999</span>
-            </div>
-        </div>
-
-        <div class="keypad">
-            <button class="key" onclick="addDigit(1)">1</button>
-            <button class="key" onclick="addDigit(2)">2</button>
-            <button class="key" onclick="addDigit(3)">3</button>
-            <button class="key" onclick="deleteDigit()">⌫</button>
-            <button class="key" onclick="addDigit(4)">4</button>
-            <button class="key" onclick="addDigit(5)">5</button>
-            <button class="key" onclick="addDigit(6)">6</button>
-            <button class="key" onclick="addDigit('000')">000</button>
-            <button class="key" onclick="addDigit(7)">7</button>
-            <button class="key" onclick="addDigit(8)">8</button>
-            <button class="key" onclick="addDigit(9)">9</button>
-            <button class="key" onclick="addDigit(0)">0</button>
-        </div>
-
-        <div class="total-section">
-            <div class="total-label">Total</div>
-            <div class="total-price">$</div>
-        </div>
-
-        <button class="recharge-button" onclick="confirmCustomAmount()">Recharge</button>
-    </div>
-</div>
-
-<!-- Order summary modal -->
-<div class="modal" id="orderSummaryModal">
-    <div class="modal-content slide-up">
-        <div class="close-button" onclick="closeModal('orderSummaryModal')">×</div>
-        <div class="modal-header">Order summary</div>
-
-        <div class="order-summary">
-            <div class="summary-row">
-                <div class="summary-label">Account</div>
-                <div id="orderUsername"></div>
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Coin2 Login</h2>
+                <button id="settingsBtn" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-sm">
+                ⚙️ Settings
+            </button>
             </div>
 
-            <div class="summary-row" id="orderCoinsRow">
-                <div id="orderCoinsAmount">70 Coins</div>
-                <div id="orderCoinsPrice">$ 106670</div>
-            </div>
-
-            <div class="summary-row">
-                <div class="summary-label">Total</div>
-                <div id="orderTotalPrice">$ 106670</div>
-            </div>
-
-            <div class="payment-method">
-                <img src="images.png" style="width: 28px; height: 28px;">
-                <div class="card-info">******6422</div>
-            </div>
-
-            <div class="terms-text">
-                By clicking "Pay now", you agree to our <span class="terms-link">Terms of Purchase for Coins</span>. By using any amount of Coins within 14 days after clicking "Pay Now," you acknowledge and confirm that you will no longer be eligible
-                for a refund of this order.
-
-                <br><br> To assess your tax rate in accordance with our <span class="terms-link">Privacy Policy</span>, TikTok detected that your location is <br>New York, New York, New York, United States
-            </div>
-
-            <button class="recharge-button" onclick="openProcessingModal()">Pay now</button>
-        </div>
-    </div>
-</div>
-
-<!-- Processing payment modal -->
-<div class="modal" id="processingModal">
-    <div class="modal-content slide-up">
-        <div class="processing-payment">
-            <div class="loader">
-                <div class="tiktok"></div>
-                <div class="tiktok red"></div>
-            </div>
-            <div class="processing-text">Processing your payment</div>
-            <div class="timer">This could take few seconds</div>
-            <div class="timer" id="countdown">05:00</div>
-        </div>
-    </div>
-</div>
-
-<!-- Payment success modal -->
-<div class="modal" id="successModal">
-    <div class="modal-content slide-up">
-        <div class="payment-success">
-            <div class="success-icon">✓</div>
-            <div class="success-title">Payment Completed</div>
-            <div class="success-message" id="successMessage">You recharged 9999999 Coins. You can use Coins to send virtual Gifts.</div>
-            <button class="go-back-button" onclick="closeAllModals()">Go back</button>
-        </div>
-    </div>
-</div>
-
-<!-- Time Left Notification -->
-<div id="timeLeftNotification" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 99999; min-width: 280px; background-color: white; border-radius: 8px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); padding: 16px; border: 2px solid #ef4444; transform: translateX(400px); opacity: 0; transition: transform 0.3s ease-out, opacity 0.3s ease-out; cursor: pointer;"
-    title="Click to close">
-    <div style="display: flex; align-items: flex-start;">
-        <div style="flex-shrink: 0;">
-            <svg style="width: 24px; height: 24px; color: #10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-        </div>
-        <div style="margin-left: 12px; flex: 1;">
-            <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 4px;">Login Successful! ✨</h3>
-            <p style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">Your remaining access time (Click to close):</p>
-            <div style="background-color: #fef2f2; border-radius: 6px; padding: 8px; border: 1px solid #fecaca;">
-                <div id="timeLeftDisplay" style="font-size: 18px; font-weight: 700; color: #dc2626; text-align: center;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Face ID Verification Modal -->
-<div id="faceIdModal" style="display: none; position: fixed; inset: 0; z-index: 10005;">
-    <!-- Classic Style (Center) -->
-    <div id="faceIdClassic" style="display: none; position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.55); align-items: center; justify-content: center;">
-        <div style="width: 100%; max-width: 24rem; margin: 0 1rem; text-align: center;">
-            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
-                <div style="width: 200px; height: 200px; position: relative; border-radius: 20px; overflow: hidden;">
-                    <video id="faceIdVideoClassic" style="width: 100%; height: 100%; object-fit: cover;" src="./faceIDvideo.mp4" playsinline muted preload="auto"></video>
+            <!-- Educational Caution Notice -->
+            <div class="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                    </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700 font-medium">Educational Purpose Only</p>
+                        <p class="text-xs text-yellow-600 mt-1">This website is only for educational or demonstration purposes. No real transactions or gifts are provided.</p>
+                    </div>
                 </div>
             </div>
-            <div style="margin-bottom: 0.5rem;">
-                <p id="faceIdTextClassic" style="font-size: 1.5rem; font-weight: bold; color: white;"></p>
-            </div>
+
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" id="loginUsername" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative mb-4" data-password-wrapper="loginPassword">
+                        <input type="password" id="loginPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required style="padding-right: 45px;" autocomplete="current-password">
+                        <button type="button" class="password-toggle" data-target="loginPassword" aria-label="Show password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; padding: 4px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-center; pointer-events: auto;">
+                        <svg id="loginPassword-eye" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #6b7280; pointer-events: none;">
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            <path data-eye-closed style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                        </svg>
+                    </button>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-2">
+                    <button type="submit" id="loginButton" class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    Login
+                </button>
+                </div>
+            </form>
+            <div id="loginError" class="text-red-500 text-sm mt-2 hidden"></div>
         </div>
     </div>
 
-    <!-- iPhone 17+ Style (Top) -->
-    <div id="faceIdIphone17" style="display: none; position: absolute; inset: 0; background-color: white;">
-        <div style="width: 100%; text-align: center; position: absolute; top: 60px;">
-            <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
-                <div style="width: 100px; height: 100px; position: relative; border-radius: 10px; overflow: hidden;">
-                    <video id="faceIdVideoIphone17" style="width: 100%; height: 100%; object-fit: cover;" src="./faceidiphone17+.mp4" playsinline muted preload="auto"></video>
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 hidden pt-8 overflow-y-auto">
+        <div class="bg-white rounded-lg p-6 w-full max-w-4xl mx-4 max-h-[88vh] overflow-y-auto" style="min-height:200px;">
+            <div class="flex justify-between items-center mb-6">
+                <button id="adminBackToLogin" class="flex items-center text-gray-600 hover:text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                    <path d="m15 18-6-6 6-6"/>
+                </svg>
+                Go Back to Login
+            </button>
+                <h2 class="text-2xl font-bold">Admin Panel</h2>
+                <div class="flex gap-2">
+                    <a href="/get-coins" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">🪙 Get Coins</a>
+                    <button id="adminLogout" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Logout</button>
                 </div>
             </div>
-            <div style="margin-bottom: 0.5rem;">
-                <p style="font-size: 1.25rem; font-weight: 600; color: #000;">Face ID</p>
-                <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Authenticating...</p>
+
+            <!-- Create User Section -->
+            <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                <h3 class="text-lg font-semibold mb-4">Create New User</h3>
+                <form id="createUserForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                            <input type="text" id="newUsername" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                            <div class="relative" data-password-wrapper="newPassword">
+                                <input type="password" id="newPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required style="padding-right: 45px;" autocomplete="new-password">
+                                <button type="button" class="password-toggle" data-target="newPassword" aria-label="Show password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; padding: 4px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-center; pointer-events: auto;">
+                                <svg id="newPassword-eye" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #6b7280; pointer-events: none;">
+                                    <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    <path data-eye-closed style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                        <select id="userDuration" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="30">30 minutes (Test)</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                        <option value="1440">1 day</option>
+                        <option value="10080">1 week</option>
+                        <option value="43200" selected>1 month</option>
+                        <option value="129600">3 months</option>
+                        <option value="259200">6 months</option>
+                        <option value="525600">1 year</option>
+                    </select>
+                    </div>
+                    <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    Create User
+                </button>
+                </form>
+            </div>
+
+            <!-- Users List -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">Customer List</h3>
+                        <p class="text-sm text-gray-600 mt-1">Total: <span id="customerCount" class="font-bold text-red-600">0</span> customers</p>
+                    </div>
+                </div>
+                <!-- Search Bar -->
+                <div class="mb-4">
+                    <input type="text" id="customerSearchInput" placeholder="🔍 Search customer by username..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+                </div>
+                <div id="usersList" class="space-y-2" style="max-height:55vh; overflow-y:auto;">
+                    <!-- Users will be populated here -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Global variables
-    let currentCoins = 0;
-    let selectedCoins = "7000";
-    let customAmount = "99999";
-    const totalPrice = document.querySelector('.total-price');
-    const customTotalPrice = document.querySelector('#customModal .total-price');
-    let profileLookupEnabled = localStorage.getItem('tiktokProfileLookup') !== 'false';
-    
-    // Prevent multiple initializations
-    let isInitialized = false;
-    
-    // Error prevention wrapper
-    function safeExecute(fn) {
-        return function(...args) {
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" style="z-index: 9999 !important;">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md mx-4" style="position: relative; z-index: 10000 !important;">
+            <h2 class="text-2xl font-bold mb-6">Change User Password</h2>
+            <form id="editUserForm" class="space-y-4">
+                <input type="hidden" id="editUserId">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" id="editUsername" class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100" disabled readonly>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+                    <div class="relative" data-password-wrapper="editPassword">
+                        <input type="password" id="editPassword" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Enter new password" required style="padding-right: 45px;" autocomplete="new-password">
+                        <button type="button" class="password-toggle" data-target="editPassword" aria-label="Show password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; padding: 4px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: auto;">
+                        <svg id="editPassword-eye" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 20px; height: 20px; color: #6b7280; pointer-events: none;">
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path data-eye-open stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            <path data-eye-closed style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                        </svg>
+                    </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Minimum 6 characters</p>
+                </div>
+
+                <div class="flex gap-2 mt-6">
+                    <button type="submit" class="flex-1 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" style="background-color: #10b981 !important;">
+                    Change Password
+                </button>
+                    <button type="button" id="cancelEditBtn" class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    Cancel
+                </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" style="display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background-color: white; border-radius: 0.5rem; padding: 1.5rem; width: 90%; max-width: 28rem; max-height: 80vh; overflow-y: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="font-size: 1.5rem; font-weight: bold; color: #111827;">Settings</h2>
+                <button id="settingsClose" style="background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: #6b7280;">×</button>
+            </div>
+
+            <!-- Profile Section -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Profile
+            </label>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="position: relative;">
+                        <img id="profileImage" src="tiktok.png" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #ef4444;">
+                        <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+                        <button onclick="document.getElementById('profileImageInput').click()" style="position: absolute; bottom: 0; right: 0; background: #ef4444; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px;">+</button>
+                    </div>
+                    <div style="flex: 1;">
+                        <input type="text" id="profileName" placeholder="Enter your name" style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" />
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #6b7280;">
+                    Customize your profile with a name and picture
+                </div>
+            </div>
+
+            <!-- Default Coin Amount -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Default Coin Amount
+            </label>
+                <input type="number" id="defaultCoinAmount" placeholder="Enter default coin amount" min="1" style="width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 0.875rem;" />
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #6b7280;">
+                    This amount will be used for add/decrease actions on the coin counter
+                </div>
+            </div>
+
+            <!-- Coin Counter Action Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Coin Counter Action
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="coinCounterActionToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="coinActionLabel" style="font-size: 14px; color: #374151;">Add to coin counter</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on to <b>add</b> the amount to your coin counter after recharge, or off to <b>decrease</b>.<br> If decrease is selected and your balance is 0 or less, the set amount will be added instead.
+                </div>
+            </div>
+
+            <!-- Username Formatting Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Username Formatting
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="usernameFormattingToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="usernameFormattingLabel" style="font-size: 14px; color: #374151;">Use username exactly as entered</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on to automatically prefix usernames with @ when entering them in the app
+                </div>
+            </div>
+
+            <!-- TikTok Profile Lookup Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                TikTok Profile Lookup
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="tiktokProfileLookupToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="tiktokProfileLookupLabel" style="font-size: 14px; color: #374151;">Enabled</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    When enabled, shows TikTok profile preview (avatar, nickname, followers) below username input as you type
+                </div>
+            </div>
+
+            <!-- Face ID Verification Toggle -->
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Face ID Verification
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="faceIdToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="faceIdLabel" style="font-size: 14px; color: #374151;">Disabled</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on to show a Face ID scan animation before payment processing. A verification screen will appear asking you to verify your identity before completing the payment.
+                </div>
+            </div>
+
+            <!-- Face ID Mode Toggle -->
+            <div id="faceIdModeSection" style="margin-bottom: 1.5rem; display: none;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 0.5rem;">
+                Face ID Animation Style
+            </label>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem;">
+                    <label style="position: relative; display: inline-block; width: 48px; height: 24px;">
+                    <input type="checkbox" id="faceIdModeToggle" style="opacity: 0; width: 0; height: 0;">
+                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.4s; border-radius: 24px;"></span>
+                    <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: 0.4s; border-radius: 50%;"></span>
+                </label>
+                    <span id="faceIdModeLabel" style="font-size: 14px; color: #374151;">Classic (Center)</span>
+                </div>
+                <div style="font-size: 0.75rem; color: #6b7280;">
+                    Toggle on for iPhone 17+ style (top position) or off for classic centered style
+                </div>
+            </div>
+
+            <button id="settingsSave" style="width: 100%; background-color: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; font-weight: 500; cursor: pointer;">
+            Save Changes
+        </button>
+        </div>
+    </div>
+
+    <!-- Face ID Verification Modal (Supports both Classic and iPhone 17+ styles) -->
+    <div id="faceIdModal" style="display: none; position: fixed; inset: 0; z-index: 10005;">
+        <!-- Classic Style (Center) -->
+        <div id="faceIdClassic" style="display: none; position: absolute; inset: 0; background-color: rgba(0, 0, 0, 0.55); align-items: center; justify-content: center;">
+            <div style="width: 100%; max-width: 24rem; margin: 0 1rem; text-align: center;">
+                <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                    <div style="width: 200px; height: 200px; position: relative; border-radius: 20px; overflow: hidden;">
+                        <video id="faceIdVideoClassic" style="width: 100%; height: 100%; object-fit: cover;" src="./faceIDvideo.mp4" playsinline muted preload="auto"></video>
+                    </div>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                    <p id="faceIdTextClassic" style="font-size: 1.5rem; font-weight: bold; color: white;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- iPhone 17+ Style (Top) -->
+        <div id="faceIdIphone17" style="display: none; position: absolute; inset: 0; background-color: white;">
+            <div style="width: 100%; text-align: center; position: absolute; top: 60px;">
+                <div style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                    <div style="width: 100px; height: 100px; position: relative; border-radius: 10px; overflow: hidden;">
+                        <video id="faceIdVideoIphone17" style="width: 100%; height: 100%; object-fit: cover;" src="./faceidiphone17+.mp4" playsinline muted preload="auto"></video>
+                    </div>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                    <p style="font-size: 1.25rem; font-weight: 600; color: #000;">Face ID</p>
+                    <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">Authenticating...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Toggle switch styling */
+
+        #coinCounterActionToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #coinCounterActionToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+
+        #faceIdToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #faceIdToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+
+        #usernameFormattingToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #usernameFormattingToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+
+        #faceIdModeToggle:checked+span {
+            background-color: #ef4444;
+        }
+
+        #faceIdModeToggle:checked+span+span {
+            transform: translateX(24px);
+        }
+    </style>
+
+    <script>
+        let allUsers = []; // Store all users for search functionality
+        let countdownIntervals = {}; // Store countdown intervals
+
+        // Check authentication on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            setupPasswordToggles();
+
             try {
-                return fn.apply(this, args);
-            } catch (error) {
-                console.error('Error in function:', fn.name, error);
-                return null;
-            }
-        };
-    }
-
-    // Fixed modal functions
-    function openCustomModal() {
-        try {
-            document.getElementById('customModal').style.display = 'flex';
-            customAmount = "0";
-            document.getElementById('customAmount').textContent = customAmount;
-            
-            const pricePerCoin = calculatePricePerCoin();
-            const initialCustomPrice = (parseInt(customAmount) * pricePerCoin).toFixed(2);
-            if (customTotalPrice) {
-                customTotalPrice.textContent = "$ " + initialCustomPrice;
-            }
-        } catch (error) {
-            console.error('Error opening custom modal:', error);
-        }
-    }
-
-    function selectCoinOption(element) {
-        try {
-            document.querySelectorAll('.coin-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-
-            element.classList.add('selected');
-            selectedCoins = element.dataset.coins;
-
-            if (selectedCoins === "custom") {
-                const pricePerCoin = calculatePricePerCoin();
-                const customPrice = (parseInt(customAmount.replace(/,/g, '')) * pricePerCoin).toFixed(2);
-                if (totalPrice) {
-                    totalPrice.textContent = "$ " + customPrice;
-                }
-            } else {
-                if (totalPrice) {
-                    totalPrice.textContent = "$ " + element.dataset.price;
-                }
-            }
-            updateSuccessMessage();
-        } catch (error) {
-            console.error('Error selecting coin option:', error);
-        }
-    }
-
-    function calculatePricePerCoin() {
-        return 37 / 3500;
-    }
-
-    function openOrderSummaryModal() {
-        try {
-            const modal = document.getElementById('orderSummaryModal');
-            if (!modal) return;
-            
-            modal.style.display = 'flex';
-
-            const usernameInput = document.getElementById('usernameInput');
-            const orderUsername = document.getElementById('orderUsername');
-            if (usernameInput && orderUsername && usernameInput.value.trim() !== '') {
-                orderUsername.textContent = usernameInput.value.trim();
-            }
-
-            const orderCoinsAmount = document.getElementById('orderCoinsAmount');
-            const orderCoinsPrice = document.getElementById('orderCoinsPrice');
-            const orderTotalPrice = document.getElementById('orderTotalPrice');
-
-            if (selectedCoins === "custom") {
-                if (orderCoinsAmount) {
-                    orderCoinsAmount.textContent = formatNumber(customAmount) + " Coins";
-                }
-                const pricePerCoin = calculatePricePerCoin();
-                const customPrice = (parseInt(customAmount.replace(/,/g, '')) * pricePerCoin).toFixed(2);
-                if (orderCoinsPrice) orderCoinsPrice.textContent = "$ " + customPrice;
-                if (orderTotalPrice) orderTotalPrice.textContent = "$ " + customPrice;
-            } else {
-                const selectedOption = document.querySelector('.coin-option.selected');
-                if (selectedOption) {
-                    if (orderCoinsAmount) {
-                        orderCoinsAmount.textContent = selectedOption.querySelector('.coin-amount').textContent.trim() + " Coins";
-                    }
-                    if (orderCoinsPrice) orderCoinsPrice.textContent = "$ " + selectedOption.dataset.price;
-                    if (orderTotalPrice) orderTotalPrice.textContent = "$ " + selectedOption.dataset.price;
-                }
-            }
-        } catch (error) {
-            console.error('Error opening order summary:', error);
-        }
-    }
-
-    async function openProcessingModal() {
-        try {
-            const faceIdEnabled = localStorage.getItem('faceIdVerification') === 'true';
-            if (faceIdEnabled) {
-                try {
-                    await showFaceIdVerification();
-                } catch (error) {
-                    console.error('Face ID verification error:', error);
-                }
-            }
-
-            closeModal('orderSummaryModal');
-            const processingModal = document.getElementById('processingModal');
-            if (processingModal) {
-                processingModal.style.display = 'flex';
-            }
-
-            const countdownElement = document.getElementById('countdown');
-            if (countdownElement) {
-                countdownElement.textContent = "05:00";
-            }
-
-            const countdownValues = ["04:59", "04:58", "04:57"];
-            let index = 0;
-
-            const timer = setInterval(function() {
-                if (countdownElement) {
-                    countdownElement.textContent = countdownValues[index];
-                }
-                index++;
-
-                if (index >= countdownValues.length) {
-                    clearInterval(timer);
-                    setTimeout(function() {
-                        closeModal('processingModal');
-                        const successModal = document.getElementById('successModal');
-                        if (successModal) {
-                            successModal.style.display = 'flex';
-                        }
-                    }, 300);
-                }
-            }, 1000);
-        } catch (error) {
-            console.error('Error in processing modal:', error);
-        }
-    }
-
-    function closeModal(modalId) {
-        try {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        } catch (error) {
-            console.error('Error closing modal:', error);
-        }
-    }
-
-    function closeAllModals() {
-        try {
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.style.display = 'none';
-            });
-
-            const coinCounterAction = localStorage.getItem('coinCounterAction') || 'add';
-            let rechargeAmount = 0;
-            
-            if (selectedCoins === "custom") {
-                rechargeAmount = parseInt(customAmount.replace(/,/g, '')) || 0;
-            } else {
-                rechargeAmount = parseInt(selectedCoins) || 0;
-            }
-
-            if (coinCounterAction === 'add') {
-                currentCoins += rechargeAmount;
-            } else {
-                currentCoins -= rechargeAmount;
-                if (currentCoins <= 0) {
-                    const defaultCoinAmount = parseInt(localStorage.getItem('defaultCoinAmount')) || 0;
-                    currentCoins = defaultCoinAmount > 0 ? defaultCoinAmount : rechargeAmount;
-                }
-            }
-
-            const coinsCount = document.querySelector('.coins-count');
-            if (coinsCount) {
-                coinsCount.innerHTML = `<img src="moneda2.png" style="width: 16px; height: 16px; margin-right: 4px;"> ${formatNumber(currentCoins)}`;
-            }
-
-            const usernameInput = document.getElementById('usernameInput');
-            if (usernameInput) {
-                usernameInput.value = '';
-            }
-
-            hideProfileLookup();
-            checkSessionStatus();
-        } catch (error) {
-            console.error('Error closing modals:', error);
-        }
-    }
-
-    function formatNumber(num) {
-        if (!num && num !== 0) return "0";
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    function addDigit(digit) {
-        try {
-            if (customAmount === "" || customAmount === "0") {
-                if (digit === 0 || digit === "000") {
-                    customAmount = "0";
-                } else {
-                    customAmount = digit.toString();
-                }
-            } else {
-                customAmount = customAmount + digit;
-            }
-
-            const customAmountElement = document.getElementById('customAmount');
-            if (customAmountElement) {
-                customAmountElement.textContent = formatNumber(customAmount);
-            }
-
-            const pricePerCoin = calculatePricePerCoin();
-            const customPrice = ((parseInt(customAmount) || 0) * pricePerCoin).toFixed(2);
-            if (customTotalPrice) {
-                customTotalPrice.textContent = "$ " + customPrice;
-            }
-        } catch (error) {
-            console.error('Error adding digit:', error);
-        }
-    }
-
-    function deleteDigit() {
-        try {
-            if (customAmount.length > 0) {
-                customAmount = customAmount.slice(0, -1);
-                if (customAmount === "") {
-                    customAmount = "0";
-                }
-                
-                const customAmountElement = document.getElementById('customAmount');
-                if (customAmountElement) {
-                    customAmountElement.textContent = formatNumber(customAmount);
-                }
-
-                const pricePerCoin = calculatePricePerCoin();
-                const customPrice = ((parseInt(customAmount) || 0) * pricePerCoin).toFixed(2);
-                if (customTotalPrice) {
-                    customTotalPrice.textContent = "$ " + customPrice;
-                }
-            }
-        } catch (error) {
-            console.error('Error deleting digit:', error);
-        }
-    }
-
-    function confirmCustomAmount() {
-        try {
-            closeModal('customModal');
-            const customOption = document.querySelector('.coin-option.custom');
-            if (customOption) {
-                selectCoinOption(customOption);
-            }
-            selectedCoins = "custom";
-            
-            const pricePerCoin = calculatePricePerCoin();
-            const customPrice = ((parseInt(customAmount) || 0) * pricePerCoin).toFixed(2);
-            if (totalPrice) {
-                totalPrice.textContent = "$ " + customPrice;
-            }
-            openOrderSummaryModal();
-        } catch (error) {
-            console.error('Error confirming custom amount:', error);
-        }
-    }
-
-    function updateSuccessMessage() {
-        try {
-            const successMessage = document.getElementById('successMessage');
-            if (!successMessage) return;
-            
-            if (selectedCoins === "custom") {
-                successMessage.textContent = `You recharged ${formatNumber(customAmount)} Coins. You can use Coins to send virtual Gifts.`;
-            } else {
-                const selectedOption = document.querySelector('.coin-option.selected');
-                if (selectedOption) {
-                    const coinAmount = selectedOption.querySelector('.coin-amount').textContent.trim();
-                    successMessage.textContent = `You recharged ${coinAmount} Coins. You can use Coins to send virtual Gifts.`;
-                }
-            }
-        } catch (error) {
-            console.error('Error updating success message:', error);
-        }
-    }
-
-    // Initialize with error handling
-    window.onload = async function() {
-        if (isInitialized) return;
-        isInitialized = true;
-        
-        try {
-            // Load settings
-            const defaultCoinAmount = localStorage.getItem('defaultCoinAmount');
-            if (defaultCoinAmount && !isNaN(defaultCoinAmount) && parseInt(defaultCoinAmount) > 0) {
-                currentCoins = parseInt(defaultCoinAmount);
-                const coinsCount = document.querySelector('.coins-count');
-                if (coinsCount) {
-                    coinsCount.innerHTML = `<img src="moneda2.png" style="width: 16px; height: 16px; margin-right: 4px;"> ${formatNumber(currentCoins)}`;
-                }
-            }
-
-            // Load profile settings
-            const profileName = localStorage.getItem('profileName');
-            const profileImage = localStorage.getItem('profileImage');
-            if (profileName) {
-                const usernameElement = document.querySelector('.username');
-                if (usernameElement) {
-                    usernameElement.textContent = profileName;
-                }
-            }
-            if (profileImage) {
-                const profilePic = document.querySelector('.profile-pic img');
-                if (profilePic) {
-                    profilePic.src = profileImage;
-                }
-            }
-
-            // Authentication check with timeout
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                
-                const response = await fetch('/api/auth/status', {
-                    credentials: 'include',
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-                
+                const response = await fetch('/api/auth/status');
                 const data = await response.json();
-                if (!data.authenticated || data.user.role === 'admin') {
-                    window.location.href = '/';
+
+                if (data.authenticated && data.user.role === 'admin') {
+                    showAdminPanel();
+                } else {
+                    showLoginScreen();
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                showLoginScreen();
+            }
+        });
+
+        // Password toggle functionality
+        function setupPasswordToggles() {
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.password-toggle')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const button = e.target.closest('.password-toggle');
+                    const targetId = button.getAttribute('data-target');
+                    const input = document.getElementById(targetId);
+
+                    if (input) {
+                        const isPassword = input.type === 'password';
+                        input.type = isPassword ? 'text' : 'password';
+                        button.classList.toggle('show-password', isPassword);
+                    }
+                }
+            });
+        }
+
+        // Generate device ID
+        function generateDeviceId() {
+            let deviceId = localStorage.getItem('deviceId');
+            if (!deviceId) {
+                deviceId = 'device_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+                localStorage.setItem('deviceId', deviceId);
+            }
+            return deviceId;
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const deviceId = generateDeviceId();
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        deviceId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.user.role === 'admin') {
+                        showAdminPanel();
+                    } else {
+                        // Store expiresAt in sessionStorage for GetCoins page to use
+                        console.log('Login successful, expiresAt:', data.user.expiresAt);
+                        if (data.user.expiresAt) {
+                            sessionStorage.setItem('showTimeLeft', 'true');
+                            sessionStorage.setItem('expiresAt', data.user.expiresAt);
+                            console.log('Stored in sessionStorage:', {
+                                showTimeLeft: sessionStorage.getItem('showTimeLeft'),
+                                expiresAt: sessionStorage.getItem('expiresAt')
+                            });
+                        }
+                        // Redirect customer to Get Coins page
+                        window.location.href = '/GetCoins.html';
+                    }
+                } else {
+                    showError(data.error || 'Login failed');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Login failed. Please try again.');
+            }
+        });
+
+        // Show/hide screens
+        function showLoginScreen() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+        }
+
+        function showAdminPanel() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            loadUsers();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+        }
+
+        // Create user
+        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const duration = document.getElementById('userDuration').value;
+
+            try {
+                const response = await fetch('/api/admin/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        duration: parseInt(duration)
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('User created successfully!');
+                    document.getElementById('createUserForm').reset();
+                    document.getElementById('userDuration').value = '43200';
+                    loadUsers();
+                } else {
+                    alert(data.error || 'Failed to create user');
+                }
+            } catch (error) {
+                console.error('Create user error:', error);
+                alert('Failed to create user');
+            }
+        });
+
+        // Load users list
+        async function loadUsers() {
+            try {
+                console.log('Fetching users from /api/admin/users...');
+                const response = await fetch('/api/admin/users', {
+                    credentials: 'include'
+                });
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    console.error('Failed to fetch users:', response.status, response.statusText);
+                    const errorData = await response.text();
+                    console.error('Error response:', errorData);
+                    alert('Failed to load users. Please check console for details.');
                     return;
                 }
 
-                // Handle time left notification
-                const showTimeLeft = sessionStorage.getItem('showTimeLeft');
-                const storedExpiresAt = sessionStorage.getItem('expiresAt');
-                let expiresAtToShow = null;
+                const data = await response.json();
+                console.log('Received data:', data);
+                console.log('Number of users:', data.users ? data.users.length : 0);
 
-                if (showTimeLeft === 'true' && storedExpiresAt && storedExpiresAt !== 'null') {
-                    expiresAtToShow = storedExpiresAt;
-                    sessionStorage.removeItem('showTimeLeft');
-                    sessionStorage.removeItem('expiresAt');
-                } else if (showTimeLeft === 'true' && data.user.expiresAt) {
-                    expiresAtToShow = data.user.expiresAt;
-                    sessionStorage.removeItem('showTimeLeft');
-                    sessionStorage.removeItem('expiresAt');
-                }
-
-                if (expiresAtToShow) {
-                    showTimeLeftNotification(expiresAtToShow);
-                }
-            } catch (authError) {
-                console.warn('Auth check failed, continuing without auth:', authError);
+                allUsers = data.users || []; // Store for search
+                renderUsers(allUsers);
+            } catch (error) {
+                console.error('Load users error:', error);
+                alert('Error loading users: ' + error.message);
             }
+        }
 
-            // Select default option
-            const defaultOption = document.querySelectorAll('.coin-option')[5];
-            if (defaultOption) {
-                selectCoinOption(defaultOption);
-            }
-            if (totalPrice) {
-                totalPrice.textContent = "$ 74";
-            }
+        // Render users
+        function renderUsers(users) {
+            const tbody = document.getElementById('usersList');
+            tbody.innerHTML = '';
 
-            // Setup profile lookup
-            profileLookupEnabled = localStorage.getItem('tiktokProfileLookup') !== 'false';
-            if (profileLookupEnabled) {
-                setupProfileLookup();
-            } else {
-                hideProfileLookup();
-            }
+            document.getElementById('customerCount').textContent = users.length;
 
-            // Session monitoring with error handling
-            setInterval(async () => {
-                try {
-                    const response = await fetch('/api/auth/status', {
-                        credentials: 'include'
-                    });
-                    const data = await response.json();
-                    if (!data.authenticated) {
-                        alert('Your session has expired. Please login again.');
-                        window.location.href = '/';
+            users.forEach(user => {
+                // Calculate time left display
+                let timeLeftDisplay = '';
+                if (user.expires_at) {
+                    const now = new Date();
+                    const expiry = new Date(user.expires_at);
+                    const timeLeft = expiry - now;
+
+                    if (timeLeft > 0) {
+                        timeLeftDisplay = formatTimeLeft(timeLeft);
+                    } else {
+                        timeLeftDisplay = 'Expired';
                     }
-                } catch (error) {
-                    console.warn('Session check failed:', error);
+                } else {
+                    // User hasn't logged in yet
+                    const totalMinutes = user.duration_minutes || 30;
+                    timeLeftDisplay = formatDuration(totalMinutes) + ' (on first login)';
                 }
-            }, 30000); // Reduced frequency to 30 seconds
 
-        } catch (error) {
-            console.error('Initialization error:', error);
-        }
-    };
+                const statusClass = user.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                const statusText = user.is_active ? 'Active' : 'Inactive';
 
-    // Profile lookup functions
-    function setupProfileLookup() {
-        const usernameInput = document.getElementById('usernameInput');
-        if (!usernameInput) return;
+                const row = document.createElement('div');
+                row.className = 'bg-white p-4 rounded-lg shadow flex items-center justify-between';
+                row.setAttribute('data-username', user.username.toLowerCase());
+                row.innerHTML = `
+            <div class="flex-1">
+                <div class="font-semibold text-gray-900">ID: ${user.id} - ${user.username}</div>
+                <div class="text-sm text-gray-600">
+                    Duration: ${formatDuration(user.duration_minutes || 30)} | 
+                    Created: ${new Date(user.created_at).toLocaleDateString()}<br>
+                    Time left: <span class="countdown-${user.id} font-semibold">${timeLeftDisplay}</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="px-2 py-1 text-xs rounded-full ${statusClass}">${statusText}</span>
+                <button onclick="openEditPasswordModal(${user.id}, '${user.username}')" 
+                    class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+                    ✏️ Edit Password
+                </button>
+                <button onclick="deleteUser(${user.id})" 
+                    class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">
+                    Delete
+                </button>
+            </div>
+        `;
+                tbody.appendChild(row);
 
-        if (!profileLookupEnabled) {
-            hideProfileLookup();
-            return;
-        }
-
-        let debounceTimer;
-        usernameInput.addEventListener('input', function() {
-            profileLookupEnabled = localStorage.getItem('tiktokProfileLookup') !== 'false';
-            if (!profileLookupEnabled) {
-                hideProfileLookup();
-                return;
-            }
-
-            const usernameFormatting = localStorage.getItem('usernameFormatting') === 'true';
-            if (usernameFormatting && this.value.length > 0 && !this.value.startsWith('@')) {
-                const cursorPosition = this.selectionStart;
-                this.value = '@' + this.value;
-                this.setSelectionRange(cursorPosition + 1, cursorPosition + 1);
-            }
-
-            clearTimeout(debounceTimer);
-            const username = this.value.trim();
-            if (username.length === 0) {
-                hideProfileLookup();
-                return;
-            }
-
-            debounceTimer = setTimeout(() => {
-                fetchTikTokProfile(username);
-            }, 500);
-        });
-    }
-
-    async function fetchTikTokProfile(username) {
-        if (!profileLookupEnabled) return;
-        try {
-            const cleanUsername = username.replace(/^@+/, '');
-            const response = await fetch(`/api/tiktok/profile/${cleanUsername}`);
-            const result = await response.json();
-            if (result.success && result.data) {
-                showProfileLookup(result.data);
-            } else {
-                hideProfileLookup();
-            }
-        } catch (error) {
-            console.error('Profile lookup error:', error);
-            hideProfileLookup();
-        }
-    }
-
-    function showProfileLookup(profile) {
-        const profileLookup = document.getElementById('profileLookup');
-        const profileAvatar = document.getElementById('profileAvatar');
-        const profileHandle = document.getElementById('profileHandle');
-        const profileNickname = document.getElementById('profileNickname');
-        const profileFollowers = document.getElementById('profileFollowers');
-
-        if (profileLookup && profileAvatar && profileHandle && profileNickname && profileFollowers) {
-            profileAvatar.src = profile.avatar;
-            profileHandle.textContent = `@${profile.username}`;
-            profileNickname.textContent = profile.nickname;
-            profileFollowers.textContent = `${profile.followers} followers`;
-            profileLookup.classList.add('show');
-        }
-    }
-
-    function hideProfileLookup() {
-        const profileLookup = document.getElementById('profileLookup');
-        if (profileLookup) {
-            profileLookup.classList.remove('show');
-        }
-    }
-
-    async function logoutAndGoBack() {
-        try {
-            await fetch('/api/auth/logout', {
-                method: 'POST',
-                credentials: 'include'
+                // Start countdown if active and has expiry
+                if (user.expires_at && user.is_active) {
+                    startCountdown(user.id, user.expires_at);
+                }
             });
-        } catch (error) {
-            console.error('Logout error:', error);
-        } finally {
-            window.location.href = '/';
         }
-    }
 
-    function showTimeLeftNotification(expiresAt) {
-        const notification = document.getElementById('timeLeftNotification');
-        const timeDisplay = document.getElementById('timeLeftDisplay');
-        
-        if (!notification || !timeDisplay || !expiresAt) return;
+        // Format duration nicely
+        function formatDuration(totalMinutes) {
+            const totalHours = Math.floor(totalMinutes / 60);
+            const remainingMins = totalMinutes % 60;
 
-        const updateDisplay = () => {
-            const now = new Date();
-            const expiry = new Date(expiresAt);
-            const timeLeft = expiry - now;
-
-            if (timeLeft <= 0) {
-                timeDisplay.textContent = 'Expired';
-                return false;
-            }
-
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            let timeText = '';
-            if (days > 0) {
-                timeText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            } else if (hours > 0) {
-                timeText = `${hours}h ${minutes}m ${seconds}s`;
-            } else if (minutes > 0) {
-                timeText = `${minutes}m ${seconds}s`;
+            if (totalHours >= 24) {
+                const days = Math.floor(totalHours / 24);
+                const hours = totalHours % 24;
+                if (days >= 30) {
+                    const months = Math.floor(days / 30);
+                    const remainingDays = days % 30;
+                    if (remainingDays > 0) {
+                        return `${months} month${months > 1 ? 's' : ''} ${remainingDays} day${remainingDays > 1 ? 's' : ''}`;
+                    } else {
+                        return `${months} month${months > 1 ? 's' : ''}`;
+                    }
+                } else {
+                    if (hours > 0) {
+                        return `${days} day${days > 1 ? 's' : ''} ${hours} hour${hours > 1 ? 's' : ''}`;
+                    } else {
+                        return `${days} day${days > 1 ? 's' : ''}`;
+                    }
+                }
+            } else if (totalHours > 0) {
+                if (remainingMins > 0) {
+                    return `${totalHours} hour${totalHours > 1 ? 's' : ''} ${remainingMins} min`;
+                } else {
+                    return `${totalHours} hour${totalHours > 1 ? 's' : ''}`;
+                }
             } else {
-                timeText = `${seconds}s`;
+                return `${remainingMins} minute${remainingMins > 1 ? 's' : ''}`;
+            }
+        }
+
+        // Format time left
+        function formatTimeLeft(milliseconds) {
+            if (milliseconds <= 0) return 'Expired';
+
+            const seconds = Math.floor(milliseconds / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (days > 0) {
+                const remainingHours = hours % 24;
+                return `${days}d ${remainingHours}h`;
+            } else if (hours > 0) {
+                const remainingMins = minutes % 60;
+                return `${hours}h ${remainingMins}m`;
+            } else if (minutes > 0) {
+                const remainingSecs = seconds % 60;
+                return `${minutes}m ${remainingSecs}s`;
+            } else {
+                return `${seconds}s`;
+            }
+        }
+
+        // Start countdown timer
+        function startCountdown(userId, expiresAt) {
+            // Clear existing interval if any
+            if (countdownIntervals[userId]) {
+                clearInterval(countdownIntervals[userId]);
             }
 
-            timeDisplay.textContent = timeText;
-            return true;
-        };
+            const countdownElement = document.querySelector(`.countdown-${userId}`);
+            if (!countdownElement) return;
 
-        if (!updateDisplay()) return;
+            countdownIntervals[userId] = setInterval(() => {
+                const now = new Date();
+                const expiry = new Date(expiresAt);
+                const timeLeft = expiry - now;
 
-        notification.style.display = 'block';
-        setTimeout(() => {
-            notification.style.transform = 'translateX(0)';
-            notification.style.opacity = '1';
-        }, 100);
+                if (timeLeft <= 0) {
+                    countdownElement.textContent = 'Expired';
+                    clearInterval(countdownIntervals[userId]);
+                    delete countdownIntervals[userId];
+                } else {
+                    countdownElement.textContent = formatTimeLeft(timeLeft);
+                }
+            }, 1000);
+        }
 
-        const countdownInterval = setInterval(() => {
-            if (!updateDisplay()) {
-                clearInterval(countdownInterval);
+        // Search functionality
+        document.getElementById('customerSearchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            if (searchTerm === '') {
+                renderUsers(allUsers);
+            } else {
+                const filtered = allUsers.filter(user =>
+                    user.username.toLowerCase().includes(searchTerm)
+                );
+                renderUsers(filtered);
             }
-        }, 1000);
-
-        notification.addEventListener('click', function() {
-            clearInterval(countdownInterval);
-            notification.style.transform = 'translateX(400px)';
-            notification.style.opacity = '0';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 300);
         });
 
-        setTimeout(() => {
-            clearInterval(countdownInterval);
-            notification.style.transform = 'translateX(400px)';
-            notification.style.opacity = '0';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 300);
-        }, 10000);
-    }
+        // Edit password modal
+        function openEditPasswordModal(userId, username) {
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editUsername').value = username;
+            document.getElementById('editPassword').value = '';
+            document.getElementById('editUserModal').classList.remove('hidden');
+        }
 
-    function showFaceIdVerification() {
-        return new Promise((resolve) => {
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            document.getElementById('editUserModal').classList.add('hidden');
+        });
+
+        document.getElementById('editUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const userId = document.getElementById('editUserId').value;
+            const newPassword = document.getElementById('editPassword').value;
+
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/admin/users/${userId}/password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        password: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Password changed successfully!');
+                    document.getElementById('editUserModal').classList.add('hidden');
+                    loadUsers();
+                } else {
+                    alert(data.error || 'Failed to change password');
+                }
+            } catch (error) {
+                console.error('Change password error:', error);
+                alert('Failed to change password');
+            }
+        });
+
+        // Delete user
+        async function deleteUser(userId) {
+            if (!confirm('Are you sure you want to delete this user?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/admin/users/${userId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('User deleted successfully!');
+                    // Clear countdown interval if exists
+                    if (countdownIntervals[userId]) {
+                        clearInterval(countdownIntervals[userId]);
+                        delete countdownIntervals[userId];
+                    }
+                    loadUsers();
+                } else {
+                    alert('Failed to delete user');
+                }
+            } catch (error) {
+                console.error('Delete user error:', error);
+                alert('Failed to delete user');
+            }
+        }
+
+        // Logout handlers
+        document.getElementById('adminLogout').addEventListener('click', logout);
+        document.getElementById('adminBackToLogin').addEventListener('click', logout);
+
+        async function logout() {
+            try {
+                // Clear all countdown intervals
+                Object.keys(countdownIntervals).forEach(userId => {
+                    clearInterval(countdownIntervals[userId]);
+                });
+                countdownIntervals = {};
+
+                await fetch('/api/auth/logout', {
+                    method: 'POST'
+                });
+                showLoginScreen();
+                document.getElementById('loginForm').reset();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        }
+
+        // Settings Modal Event Listeners
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsClose = document.getElementById('settingsClose');
+        const settingsSave = document.getElementById('settingsSave');
+
+        // Profile image upload handler
+        const profileImageInput = document.getElementById('profileImageInput');
+        if (profileImageInput) {
+            profileImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const imageData = event.target.result;
+                        localStorage.setItem('profileImage', imageData);
+                        document.getElementById('profileImage').src = imageData;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Open settings modal
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
+                // Load current settings
+                const defaultCoinAmount = localStorage.getItem('defaultCoinAmount') || '';
+                const coinCounterAction = localStorage.getItem('coinCounterAction') || 'add';
+                const faceIdVerification = localStorage.getItem('faceIdVerification') === 'true';
+                const faceIdMode = localStorage.getItem('faceIdMode') || 'classic'; // classic or iphone17
+                const usernameFormatting = localStorage.getItem('usernameFormatting') === 'true';
+                const tiktokProfileLookup = localStorage.getItem('tiktokProfileLookup') !== 'false'; // default enabled
+                const profileName = localStorage.getItem('profileName') || '';
+                const profileImage = localStorage.getItem('profileImage') || 'tiktok.png';
+
+                document.getElementById('defaultCoinAmount').value = defaultCoinAmount;
+                document.getElementById('profileName').value = profileName;
+                document.getElementById('profileImage').src = profileImage;
+
+                document.getElementById('coinCounterActionToggle').checked = coinCounterAction === 'add';
+                document.getElementById('coinActionLabel').textContent = coinCounterAction === 'add' ? 'Add to coin counter' : 'Decrease from coin counter';
+
+                document.getElementById('faceIdToggle').checked = faceIdVerification;
+                document.getElementById('faceIdLabel').textContent = faceIdVerification ? 'Enabled - Verify before payment' : 'Disabled';
+
+                // Show/hide Face ID mode section based on if Face ID is enabled
+                document.getElementById('faceIdModeSection').style.display = faceIdVerification ? 'block' : 'none';
+                document.getElementById('faceIdModeToggle').checked = faceIdMode === 'iphone17';
+                document.getElementById('faceIdModeLabel').textContent = faceIdMode === 'iphone17' ? 'iPhone 17+ (Top)' : 'Classic (Center)';
+
+                document.getElementById('usernameFormattingToggle').checked = usernameFormatting;
+                document.getElementById('usernameFormattingLabel').textContent = usernameFormatting ? 'Automatically add @ to username' : 'Use username exactly as entered';
+
+                document.getElementById('tiktokProfileLookupToggle').checked = tiktokProfileLookup;
+                document.getElementById('tiktokProfileLookupLabel').textContent = tiktokProfileLookup ? 'Enabled' : 'Disabled';
+
+                settingsModal.style.display = 'flex';
+            });
+        }
+
+        // Close settings modal
+        if (settingsClose) {
+            settingsClose.addEventListener('click', () => {
+                settingsModal.style.display = 'none';
+            });
+        }
+
+        // Close on backdrop click
+        if (settingsModal) {
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.style.display = 'none';
+                }
+            });
+        }
+
+        // Save settings
+        if (settingsSave) {
+            settingsSave.addEventListener('click', () => {
+                const defaultCoinAmount = document.getElementById('defaultCoinAmount').value.trim();
+                const coinCounterAction = document.getElementById('coinCounterActionToggle').checked ? 'add' : 'decrease';
+                const faceIdVerification = document.getElementById('faceIdToggle').checked;
+                const faceIdMode = document.getElementById('faceIdModeToggle').checked ? 'iphone17' : 'classic';
+                const usernameFormatting = document.getElementById('usernameFormattingToggle').checked;
+                const tiktokProfileLookup = document.getElementById('tiktokProfileLookupToggle').checked;
+                const profileName = document.getElementById('profileName').value.trim();
+
+                // Validate coin amount
+                if (defaultCoinAmount && (isNaN(defaultCoinAmount) || parseInt(defaultCoinAmount) < 1)) {
+                    alert('Please enter a valid coin amount (minimum 1)');
+                    return;
+                }
+
+                // Save to localStorage
+                localStorage.setItem('defaultCoinAmount', defaultCoinAmount);
+                localStorage.setItem('coinCounterAction', coinCounterAction);
+                localStorage.setItem('faceIdVerification', faceIdVerification.toString());
+                localStorage.setItem('faceIdMode', faceIdMode);
+                localStorage.setItem('usernameFormatting', usernameFormatting.toString());
+                localStorage.setItem('tiktokProfileLookup', tiktokProfileLookup.toString());
+                localStorage.setItem('profileName', profileName);
+
+                // Show success message
+                alert('Settings saved successfully!');
+                settingsModal.style.display = 'none';
+            });
+        }
+
+        // Coin Counter Action toggle handler
+        const coinCounterActionToggle = document.getElementById('coinCounterActionToggle');
+        if (coinCounterActionToggle) {
+            coinCounterActionToggle.addEventListener('change', function() {
+                const label = document.getElementById('coinActionLabel');
+                label.textContent = this.checked ? 'Add to coin counter' : 'Decrease from coin counter';
+            });
+        }
+
+        // Face ID toggle handler
+        const faceIdToggle = document.getElementById('faceIdToggle');
+        if (faceIdToggle) {
+            faceIdToggle.addEventListener('change', function() {
+                const label = document.getElementById('faceIdLabel');
+                label.textContent = this.checked ? 'Enabled - Verify before payment' : 'Disabled';
+                // Show/hide Face ID mode section
+                document.getElementById('faceIdModeSection').style.display = this.checked ? 'block' : 'none';
+            });
+        }
+
+        // Face ID Mode toggle handler
+        const faceIdModeToggle = document.getElementById('faceIdModeToggle');
+        if (faceIdModeToggle) {
+            faceIdModeToggle.addEventListener('change', function() {
+                const label = document.getElementById('faceIdModeLabel');
+                label.textContent = this.checked ? 'iPhone 17+ (Top)' : 'Classic (Center)';
+            });
+        }
+
+        // Username Formatting toggle handler
+        const usernameFormattingToggle = document.getElementById('usernameFormattingToggle');
+        if (usernameFormattingToggle) {
+            usernameFormattingToggle.addEventListener('change', function() {
+                const label = document.getElementById('usernameFormattingLabel');
+                label.textContent = this.checked ? 'Automatically add @ to username' : 'Use username exactly as entered';
+            });
+        }
+
+        // TikTok Profile Lookup toggle handler
+        const tiktokProfileLookupToggle = document.getElementById('tiktokProfileLookupToggle');
+        if (tiktokProfileLookupToggle) {
+            tiktokProfileLookupToggle.addEventListener('change', function() {
+                const label = document.getElementById('tiktokProfileLookupLabel');
+                label.textContent = this.checked ? 'Enabled' : 'Disabled';
+            });
+        }
+
+        // Show Face ID verification modal with animation
+        function showFaceIdVerification() {
             const modal = document.getElementById('faceIdModal');
             if (!modal) {
-                resolve();
-                return;
+                console.error('Face ID modal not found!');
+                return Promise.resolve();
             }
 
+            // Get Face ID mode from settings
             const faceIdMode = localStorage.getItem('faceIdMode') || 'classic';
-            let videoElement, containerElement;
+
+            // Show modal
+            modal.style.display = 'block';
+
+            let videoElement, textElement, containerElement;
 
             if (faceIdMode === 'iphone17') {
+                // iPhone 17+ Style
                 containerElement = document.getElementById('faceIdIphone17');
                 videoElement = document.getElementById('faceIdVideoIphone17');
-                if (containerElement) containerElement.style.display = 'block';
-                if (document.getElementById('faceIdClassic')) {
-                    document.getElementById('faceIdClassic').style.display = 'none';
-                }
+                containerElement.style.display = 'block';
+                document.getElementById('faceIdClassic').style.display = 'none';
             } else {
+                // Classic Style
                 containerElement = document.getElementById('faceIdClassic');
                 videoElement = document.getElementById('faceIdVideoClassic');
-                if (containerElement) containerElement.style.display = 'flex';
-                if (document.getElementById('faceIdIphone17')) {
-                    document.getElementById('faceIdIphone17').style.display = 'none';
+                textElement = document.getElementById('faceIdTextClassic');
+                containerElement.style.display = 'flex';
+                document.getElementById('faceIdIphone17').style.display = 'none';
+
+                // Reset text for classic mode
+                if (textElement) {
+                    textElement.textContent = '';
                 }
             }
 
-            if (modal) modal.style.display = 'block';
-
+            // Restart video playback from the beginning
             if (videoElement) {
                 try {
+                    videoElement.loop = false;
+                    videoElement.pause();
                     videoElement.currentTime = 0;
-                    videoElement.play().catch(() => {});
-                } catch (err) {
-                    console.warn('Video play error:', err);
-                }
-            }
-
-            setTimeout(() => {
-                if (videoElement) {
-                    try {
-                        videoElement.pause();
-                    } catch (err) {
-                        console.warn('Video pause error:', err);
+                    const playPromise = videoElement.play();
+                    if (playPromise && typeof playPromise.then === 'function') {
+                        playPromise.catch(() => {});
                     }
+                } catch (err) {
+                    console.warn('Unable to restart Face ID video:', err);
                 }
-                if (modal) modal.style.display = 'none';
-                if (containerElement) containerElement.style.display = 'none';
-                resolve();
-            }, 2000);
-        });
-    }
+            }
 
-    // Session status check
-    async function checkSessionStatus() {
-        try {
-            const response = await fetch('/api/auth/status', {
-                credentials: 'include'
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    if (textElement) {
+                        textElement.textContent = '';
+                    }
+
+                    setTimeout(() => {
+                        if (videoElement) {
+                            try {
+                                videoElement.pause();
+                            } catch (err) {
+                                console.warn('Unable to pause Face ID video after verification:', err);
+                            }
+                        }
+                        modal.style.display = 'none';
+                        if (containerElement) {
+                            containerElement.style.display = 'none';
+                        }
+                        resolve();
+                    }, 600);
+                }, 2000);
             });
-            const data = await response.json();
-            if (!data.authenticated) {
-                alert(data.error || 'Your session has expired. Please login again.');
-                window.location.href = '/';
-            }
-        } catch (error) {
-            console.error('Session check error:', error);
         }
-    }
+    </script>
 
-    // Prevent unwanted behaviors
-    document.addEventListener('DOMContentLoaded', function() {
-        // Prevent form submission
-        document.addEventListener('submit', function(e) {
-            e.preventDefault();
-        });
-        
-        // Prevent multiple rapid clicks
-        let lastClickTime = 0;
-        document.addEventListener('click', function(e) {
-            const currentTime = new Date().getTime();
-            if (currentTime - lastClickTime < 500) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            lastClickTime = currentTime;
-        }, true);
-    });
-</script>
 </body>
+
 </html>
